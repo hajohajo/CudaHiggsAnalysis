@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		660611952289A4F000BD0CC3 /* Reader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 660611932289A4F000BD0CC3 /* Reader.cpp */; };
+		6624DFD8228AE780005B8886 /* TauSelection.cu in Sources */ = {isa = PBXBuildFile; fileRef = 6624DFD6228AE780005B8886 /* TauSelection.cu */; };
 		6629F855228020200082F6DB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6629F854228020200082F6DB /* main.cpp */; };
+		6629F863228031120082F6DB /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6629F861228031120082F6DB /* Dataset.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +26,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		660611932289A4F000BD0CC3 /* Reader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Reader.cpp; sourceTree = "<group>"; };
+		660611942289A4F000BD0CC3 /* Reader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Reader.hpp; sourceTree = "<group>"; };
+		6624DFD6228AE780005B8886 /* TauSelection.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = TauSelection.cu; sourceTree = "<group>"; };
+		6624DFD7228AE780005B8886 /* TauSelection.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = TauSelection.cuh; sourceTree = "<group>"; };
 		6629F851228020200082F6DB /* HiggsAnalysis_new */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HiggsAnalysis_new; sourceTree = BUILT_PRODUCTS_DIR; };
 		6629F854228020200082F6DB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		6629F861228031120082F6DB /* Dataset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dataset.cpp; sourceTree = "<group>"; };
+		6629F862228031120082F6DB /* Dataset.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Dataset.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +47,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6624DFD5228AE75E005B8886 /* CudaSelections */ = {
+			isa = PBXGroup;
+			children = (
+				6624DFD6228AE780005B8886 /* TauSelection.cu */,
+				6624DFD7228AE780005B8886 /* TauSelection.cuh */,
+			);
+			path = CudaSelections;
+			sourceTree = "<group>";
+		};
 		6629F848228020200082F6DB = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +76,11 @@
 			isa = PBXGroup;
 			children = (
 				6629F854228020200082F6DB /* main.cpp */,
+				660611932289A4F000BD0CC3 /* Reader.cpp */,
+				660611942289A4F000BD0CC3 /* Reader.hpp */,
+				6629F861228031120082F6DB /* Dataset.cpp */,
+				6629F862228031120082F6DB /* Dataset.hpp */,
+				6624DFD5228AE75E005B8886 /* CudaSelections */,
 			);
 			path = HiggsAnalysis_new;
 			sourceTree = "<group>";
@@ -119,6 +142,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				6629F855228020200082F6DB /* main.cpp in Sources */,
+				6624DFD8228AE780005B8886 /* TauSelection.cu in Sources */,
+				6629F863228031120082F6DB /* Dataset.cpp in Sources */,
+				660611952289A4F000BD0CC3 /* Reader.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,10 +202,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/boost/1.69.0_2/include;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-lboost_filesystem",
+					"-L/usr/local/Cellar/boost/1.69.0_2/lib/",
+					"-lboost_date_time",
+				);
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -229,9 +261,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				"HEADER_SEARCH_PATHS[arch=*]" = /usr/local/Cellar/boost/1.69.0_2/include;
 				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-lboost_filesystem",
+					"-L/usr/local/Cellar/boost/1.69.0_2/lib/",
+				);
 				SDKROOT = macosx;
 			};
 			name = Release;
@@ -239,16 +276,53 @@
 		6629F859228020200082F6DB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_STYLE = Automatic;
+				"HEADER_SEARCH_PATHS[arch=*]" = (
+					/usr/local/Cellar/boost/1.69.0_2/include,
+					"$(ROOTSYS)/include/root",
+				);
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-lboost_filesystem",
+					"-L/usr/local/Cellar/boost/1.69.0_2/lib/",
+					"-lboost_date_time",
+					"-L/usr/local/Cellar/root/6.16.00_2/lib/root",
+					"-lCore",
+					"-lImt",
+					"-lRIO",
+					"-lNet",
+					"-lHist",
+					"-lGraf",
+					"-lGraf3d",
+					"-lGpad",
+					"-lROOTVecOps",
+					"-lTree",
+					"-lTreePlayer",
+					"-lRint",
+					"-lPostscript",
+					"-lMatrix",
+					"-lPhysics",
+					"-lMathCore",
+					"-lThread",
+					"-lMultiProc",
+					"-lROOTDataFrame",
+					"-lpthread",
+					"-stdlib=libc++",
+					"-lm",
+					"-ldl",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				ROOTSYS = /usr/local/Cellar/root/6.16.00_2/;
 			};
 			name = Debug;
 		};
 		6629F85A228020200082F6DB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				ROOTSYS = /usr/local/Cellar/root/6.16.00_2/;
 			};
 			name = Release;
 		};
