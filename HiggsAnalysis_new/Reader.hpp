@@ -50,7 +50,10 @@ private:
     int entryIndex;
     float* arrayToGPU;
     std::vector<std::string> inputFiles;
-    
+
+	//Global variables
+	int globalVariables;
+
     //Trigger
     int triggerVariables;
     

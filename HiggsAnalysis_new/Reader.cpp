@@ -12,6 +12,9 @@ Reader::Reader()
 {
     
     //Various numbers of how many objects are needed in the selections
+
+    //Global variables
+	globalVariables = 3;
     
     //Trigger
     triggerVariables = 3;
@@ -103,6 +106,13 @@ void Reader::readToArray()
 
             int localIndex = 0;
             
+			//Global variables
+			arrayToGPU[(event*numberOfVariables)+(localIndex) + 0] = min(taus_pt->size(), nTaus); //nTaus
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 1] = min(HLTTaus_pt->size(), nHLTTaus); //nHLTTaus
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 2] = min(jets_pt->size(), nHLTTaus); //nJets
+			localIndex += globalVariables;
+
+
             //Trigger variables
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 0] = *L1MET_x;
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 1] = *L1MET_y;
