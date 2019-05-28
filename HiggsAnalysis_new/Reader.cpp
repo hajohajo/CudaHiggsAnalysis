@@ -14,24 +14,30 @@ Reader::Reader()
     //Various numbers of how many objects are needed in the selections
 
     //Global variables
+    globalIndex = 0;
 	globalVariables = 3;
     
     //Trigger
+    triggerIndex = globalIndex + globalVariables;
     triggerVariables = 3;
     
     //Tau
+    tauIndex = triggerIndex + triggerVariables;
     nTaus = 1;
     variablesPerTau = 11;
     
     //HLT taus for matching
+    hltIndex = tauIndex + nTaus * variablesPerTau;
     nHLTTaus = nTaus;
     variablesPerHLTTau = 4;
     
     //Jets
+    jetIndex = hltIndex + nHLTTaus * variablesPerHLTTau;
     nJets = 1;
     variablesPerJet = 8;
 
     //MET
+    metIndex = jetIndex + nJets * variablesPerJet;
     metVariables = 2;
 
     numberOfVariables = nTaus*variablesPerTau + nJets*variablesPerJet + metVariables;
@@ -234,4 +240,19 @@ int Reader::getNumberOfVariables()
 int Reader::getBatchSize()
 {
     return batchSize;
+}
+
+int Reader::getTauIndex()
+{
+    return tauIndex;
+}
+
+int Reader::getHltIndex()
+{
+    return hltIndex;
+}
+
+int Reader:: getNTaus()
+{
+    return nTaus;
 }

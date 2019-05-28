@@ -52,24 +52,30 @@ private:
     std::vector<std::string> inputFiles;
 
 	//Global variables
+    int globalIndex;
 	int globalVariables;
 
     //Trigger
+    int triggerIndex;
     int triggerVariables;
     
     //Taus
+    int tauIndex;
     int nTaus;
     int variablesPerTau;
     
     //HLT taus
+    int hltIndex;
     int nHLTTaus;
     int variablesPerHLTTau;
     
     //Jets
+    int jetIndex;
     int nJets;
     int variablesPerJet;
     
     //MET
+    int metIndex;
     int metVariables;
 
 
@@ -81,6 +87,10 @@ public:
     float* getArrayToGPU();
     int getNumberOfVariables();
     int getBatchSize();
+    
+    int getTauIndex();
+    int getHltIndex();
+    int getNTaus();
 };
 
 #endif /* Reader_hpp */

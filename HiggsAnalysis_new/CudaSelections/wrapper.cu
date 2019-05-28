@@ -10,14 +10,14 @@
 #include "wrapper.h"
 #include "TauSelection.cuh"
 
-void wrapper(float *array, int entries, int nVariables)
+void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltIndex, int nTaus)
 {
     float *d_array;
     cudaMalloc(&d_array, nVariables*entries*sizeof(float));
     cudaMemcpy(d_array, array, nVariables*entries*sizeof(float), cudaMemcpyHostToDevice);
     
     int blocks = (100000+1024)/1024;
-    tauSelection<<<blocks, 1024>>>(d_array, entries);
+    tauSelection<<<blocks, 1024>>>(d_array, nVariables, tauIndex, hltIndex, nTaus);
 
     std::cout<<"Selection done"<<std::endl;
     cudaFree(d_array);

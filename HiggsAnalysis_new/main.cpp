@@ -36,6 +36,6 @@ int main(int argc, const char * argv[]) {
 
     }
     
-    wrapper(myArray, myReader.getBatchSize(), myReader.getNumberOfVariables());
+    wrapper(myArray, myReader.getBatchSize(), myReader.getNumberOfVariables(), myReader.getTauIndex(), myReader.getHltIndex(), myReader.getNTaus());
     
 }

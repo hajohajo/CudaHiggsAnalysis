@@ -7,4 +7,4 @@
 //
 #pragma once
 
-void wrapper(float *array, int entries, int nVariables);
+void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltIndex, int nTaus);

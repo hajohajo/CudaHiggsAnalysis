@@ -31,7 +31,7 @@ bool passTriggerMatching(int tauInd, int firstHLTTauInd, int nHLTTaus, float tri
 }
 
 __global__
-void tauSelection(float *array, int variablesPerEvent)
+void tauSelection(float *array, int variablesPerEvent, int tauIndex, int hltIndex, int nTaus)
 {
 	//Index of the processed event
 	int processIndex = blockIdx.x * blockDim.x + threadIdx.x;
@@ -39,9 +39,9 @@ void tauSelection(float *array, int variablesPerEvent)
 	//Index of the first variable of the event processed in the array
 	int localIndex = processIndex * variablesPerEvent;
 
-	for(int j=0; j<array[localIndex]; j++)
+	for(int j=0; j<nTaus; j++)
 	{
-//		passTriggerMatching(localIndex+j*11);
+		passTriggerMatching(localIndex+tauIndex+j*11, localIndex+hltIndex, nTaus, 0.3, array);
 	}
 
 
