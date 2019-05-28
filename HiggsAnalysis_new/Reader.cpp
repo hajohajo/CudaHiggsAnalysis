@@ -23,7 +23,7 @@ Reader::Reader()
     
     //Tau
     tauIndex = triggerIndex + triggerVariables;
-    nTaus = 1;
+    nTaus = 8;
     variablesPerTau = 11;
     
     //HLT taus for matching
