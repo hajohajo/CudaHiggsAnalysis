@@ -35,6 +35,8 @@
 		6629F854228020200082F6DB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		6629F861228031120082F6DB /* Dataset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dataset.cpp; sourceTree = "<group>"; };
 		6629F862228031120082F6DB /* Dataset.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Dataset.hpp; sourceTree = "<group>"; };
+		667BCCCD229D8DEE00DDE258 /* loitsu.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loitsu.txt; sourceTree = "<group>"; };
+		667BCCCF229D8E3100DDE258 /* wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wrapper.h; sourceTree = "<group>"; };
 		66C144FE229D5BCB00DCDA95 /* wrapper.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = wrapper.cu; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -53,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				66C144FE229D5BCB00DCDA95 /* wrapper.cu */,
+				667BCCCF229D8E3100DDE258 /* wrapper.h */,
 				6624DFD6228AE780005B8886 /* TauSelection.cu */,
 				6624DFD7228AE780005B8886 /* TauSelection.cuh */,
 			);
@@ -83,6 +86,7 @@
 				660611942289A4F000BD0CC3 /* Reader.hpp */,
 				6629F861228031120082F6DB /* Dataset.cpp */,
 				6629F862228031120082F6DB /* Dataset.hpp */,
+				667BCCCD229D8DEE00DDE258 /* loitsu.txt */,
 				6624DFD5228AE75E005B8886 /* CudaSelections */,
 			);
 			path = HiggsAnalysis_new;
