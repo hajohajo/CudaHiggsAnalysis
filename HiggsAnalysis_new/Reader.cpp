@@ -107,9 +107,9 @@ void Reader::readToArray()
             int localIndex = 0;
             
 			//Global variables
-			arrayToGPU[(event*numberOfVariables)+(localIndex) + 0] = min(taus_pt->size(), nTaus); //nTaus
-            arrayToGPU[(event*numberOfVariables)+(localIndex) + 1] = min(HLTTaus_pt->size(), nHLTTaus); //nHLTTaus
-            arrayToGPU[(event*numberOfVariables)+(localIndex) + 2] = min(jets_pt->size(), nHLTTaus); //nJets
+			arrayToGPU[(event*numberOfVariables)+(localIndex) + 0] = std::min((int)taus_pt->size(), nTaus); //nTaus
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 1] = std::min((int)HLTTau_pt->size(), nHLTTaus); //nHLTTaus
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 2] = std::min((int)jets_pt->size(), nHLTTaus); //nJets
 			localIndex += globalVariables;
 
 

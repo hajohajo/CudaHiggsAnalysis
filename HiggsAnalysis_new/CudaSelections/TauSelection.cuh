@@ -1,3 +1,3 @@
-pragma once
+#pragma once
 
-void tauSelection(float *array, int variablesPerEvent);
+extern __global__ void tauSelection(float *array, int variablesPerEvent);

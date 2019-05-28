@@ -6,7 +6,9 @@
 //  Copyright © 2019 Joona Havukainen. All rights reserved.
 //
 
-#include "wrapper.hpp"
+#include <iostream>
+#include "wrapper.h"
+#include "TauSelection.cuh"
 
 void wrapper(float *array, int entries, int nVariables)
 {
@@ -15,7 +17,7 @@ void wrapper(float *array, int entries, int nVariables)
     cudaMemcpy(d_array, array, nVariables*entries*sizeof(float), cudaMemcpyHostToDevice);
     
     int blocks = (100000+1024)/1024;
-    tauSelection<<blocks, 1024>>(d_array, nVariables);
+    tauSelection<<<blocks, 1024>>>(d_array, entries);
 
     std::cout<<"Selection done"<<std::endl;
     cudaFree(d_array);

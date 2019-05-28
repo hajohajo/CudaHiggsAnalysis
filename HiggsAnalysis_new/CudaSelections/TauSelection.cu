@@ -6,7 +6,7 @@
 //  Copyright © 2019 Joona Havukainen. All rights reserved.
 //
 
-#include "TauSelection.cuh"
+//#include "TauSelection.cuh"
 
 __device__
 float deltaR(float eta1, float eta2, float phi1, float phi2)
@@ -18,12 +18,12 @@ float deltaR(float eta1, float eta2, float phi1, float phi2)
 }
 
 __device__
-bool passTriggerMatching(int tauInd, int firstHLTTauInd, int nHLTTaus, triggerTauMatchingCone)
+bool passTriggerMatching(int tauInd, int firstHLTTauInd, int nHLTTaus, float triggerTauMatchingCone, float *array)
 {
 	float myMinDeltaR = 9999.0;
 	for(int i=0; i<nHLTTaus; i++)
 	{
-		myMinDeltaR = std::min(deltaR(array[tauInd+1], array[firstHLTTauInd+(i*4)+1)],array[tauInd+2], array[firstHLTTauInd+(i*4)+2)]), myMinDeltaR);
+		myMinDeltaR = min(deltaR(array[tauInd+1], array[firstHLTTauInd+(i*4)+1],array[tauInd+2], array[firstHLTTauInd+(i*4)+2]),myMinDeltaR);
 	}
 
 	return myMinDeltaR<triggerTauMatchingCone;
@@ -41,7 +41,7 @@ void tauSelection(float *array, int variablesPerEvent)
 
 	for(int j=0; j<array[localIndex]; j++)
 	{
-		passTriggerMatchin(localIndex+j*11)
+//		passTriggerMatching(localIndex+j*11);
 	}
 
 
