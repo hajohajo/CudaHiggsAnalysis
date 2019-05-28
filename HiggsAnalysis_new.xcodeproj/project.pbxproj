@@ -36,7 +36,6 @@
 		6629F861228031120082F6DB /* Dataset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dataset.cpp; sourceTree = "<group>"; };
 		6629F862228031120082F6DB /* Dataset.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Dataset.hpp; sourceTree = "<group>"; };
 		66C144FE229D5BCB00DCDA95 /* wrapper.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = wrapper.cu; sourceTree = "<group>"; };
-		66C144FF229D5BCB00DCDA95 /* wrapper.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = wrapper.cuh; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,7 +53,6 @@
 			isa = PBXGroup;
 			children = (
 				66C144FE229D5BCB00DCDA95 /* wrapper.cu */,
-				66C144FF229D5BCB00DCDA95 /* wrapper.cuh */,
 				6624DFD6228AE780005B8886 /* TauSelection.cu */,
 				6624DFD7228AE780005B8886 /* TauSelection.cuh */,
 			);
