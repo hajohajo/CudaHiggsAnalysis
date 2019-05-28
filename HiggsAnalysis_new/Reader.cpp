@@ -123,7 +123,7 @@ void Reader::readToArray()
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 0] = *L1MET_x;
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 1] = *L1MET_y;
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 2] = *HLT_LooseIsoPFTau50_Trk30_eta2p1_MET80_vx;
-            localIndex+=triggerVariables;
+            localIndex += triggerVariables;
             
             //Tau variables
             for(int j=0; j<nTaus; j++)
@@ -156,7 +156,8 @@ void Reader::readToArray()
                     arrayToGPU[(event*numberOfVariables)+(localIndex) + 9] = -99;
                     arrayToGPU[(event*numberOfVariables)+(localIndex) + 10] = -99;
                 }
-                localIndex=+variablesPerTau;
+                localIndex += variablesPerTau;
+                std::cout<<localIndex<<std::endl;
             }
             //End of tau variables
             
