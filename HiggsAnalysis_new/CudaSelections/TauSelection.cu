@@ -18,12 +18,12 @@ float deltaR(float eta1, float eta2, float phi1, float phi2)
 }
 
 __device__
-bool passTriggerMatching(int tauInd, int firstHLTTauInd, int nHLTTaus, float triggerTauMatchingCone, float *array)
+bool passTriggerMatching(int tauInd, int firstHLTTauInd, int nHLTTaus, float triggerTauMatchingCone, float *inputArray)
 {
 	float myMinDeltaR = 9999.0;
 	for(int i=0; i<nHLTTaus; i++)
 	{
-		myMinDeltaR = min(deltaR(array[tauInd+1], array[firstHLTTauInd+(i*4)+1],array[tauInd+2], array[firstHLTTauInd+(i*4)+2]),myMinDeltaR);
+		myMinDeltaR = min(deltaR(inputArray[tauInd+1], inputArray[firstHLTTauInd+(i*4)+1],inputArray[tauInd+2], inputArray[firstHLTTauInd+(i*4)+2]),myMinDeltaR);
 	}
 
 	return myMinDeltaR<triggerTauMatchingCone;
@@ -31,17 +31,17 @@ bool passTriggerMatching(int tauInd, int firstHLTTauInd, int nHLTTaus, float tri
 }
 
 __global__
-void tauSelection(float *array, int variablesPerEvent, int tauIndex, int hltIndex, int nTaus)
+void tauSelection(float *inputArray, bool *passedArray, int variablesPerEvent, int tauIndex, int hltIndex, int nTaus)
 {
 	//Index of the processed event
 	int processIndex = blockIdx.x * blockDim.x + threadIdx.x;
 
-	//Index of the first variable of the event processed in the array
+	//Index of the first variable of the event processed in the inputArray
 	int localIndex = processIndex * variablesPerEvent;
 
 	for(int j=0; j<nTaus; j++)
 	{
-		passTriggerMatching(localIndex+tauIndex+j*11, localIndex+hltIndex, nTaus, 0.3, array);
+		passTriggerMatching(localIndex+tauIndex+j*11, localIndex+hltIndex, nTaus, 0.3, inputArray);
 	}
 
 
