@@ -11,6 +11,7 @@
 #include "Reader.hpp"
 #include <vector>
 #include <ROOT/TTreeProcessorMT.hxx>
+#include "CudaSelections/wrapper.cuh"
 
 int main(int argc, const char * argv[]) {
 
@@ -34,5 +35,7 @@ int main(int argc, const char * argv[]) {
         std::cout<<myArray[i]<<" ";
 
     }
+    
+    wrapper(myArray, myReader.getBatchSize());
     
 }

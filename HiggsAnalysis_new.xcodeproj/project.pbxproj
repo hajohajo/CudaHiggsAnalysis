@@ -11,6 +11,7 @@
 		6624DFD8228AE780005B8886 /* TauSelection.cu in Sources */ = {isa = PBXBuildFile; fileRef = 6624DFD6228AE780005B8886 /* TauSelection.cu */; };
 		6629F855228020200082F6DB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6629F854228020200082F6DB /* main.cpp */; };
 		6629F863228031120082F6DB /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6629F861228031120082F6DB /* Dataset.cpp */; };
+		66C14500229D5BCB00DCDA95 /* wrapper.cu in Sources */ = {isa = PBXBuildFile; fileRef = 66C144FE229D5BCB00DCDA95 /* wrapper.cu */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,12 +29,14 @@
 /* Begin PBXFileReference section */
 		660611932289A4F000BD0CC3 /* Reader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Reader.cpp; sourceTree = "<group>"; };
 		660611942289A4F000BD0CC3 /* Reader.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Reader.hpp; sourceTree = "<group>"; };
-		6624DFD6228AE780005B8886 /* TauSelection.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = TauSelection.cu; sourceTree = "<group>"; };
-		6624DFD7228AE780005B8886 /* TauSelection.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = TauSelection.cuh; sourceTree = "<group>"; };
+		6624DFD6228AE780005B8886 /* TauSelection.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = TauSelection.cu; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		6624DFD7228AE780005B8886 /* TauSelection.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = TauSelection.cuh; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		6629F851228020200082F6DB /* HiggsAnalysis_new */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HiggsAnalysis_new; sourceTree = BUILT_PRODUCTS_DIR; };
 		6629F854228020200082F6DB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		6629F861228031120082F6DB /* Dataset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dataset.cpp; sourceTree = "<group>"; };
 		6629F862228031120082F6DB /* Dataset.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Dataset.hpp; sourceTree = "<group>"; };
+		66C144FE229D5BCB00DCDA95 /* wrapper.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = wrapper.cu; sourceTree = "<group>"; };
+		66C144FF229D5BCB00DCDA95 /* wrapper.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = wrapper.cuh; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +53,8 @@
 		6624DFD5228AE75E005B8886 /* CudaSelections */ = {
 			isa = PBXGroup;
 			children = (
+				66C144FE229D5BCB00DCDA95 /* wrapper.cu */,
+				66C144FF229D5BCB00DCDA95 /* wrapper.cuh */,
 				6624DFD6228AE780005B8886 /* TauSelection.cu */,
 				6624DFD7228AE780005B8886 /* TauSelection.cuh */,
 			);
@@ -145,6 +150,7 @@
 				6624DFD8228AE780005B8886 /* TauSelection.cu in Sources */,
 				6629F863228031120082F6DB /* Dataset.cpp in Sources */,
 				660611952289A4F000BD0CC3 /* Reader.cpp in Sources */,
+				66C14500229D5BCB00DCDA95 /* wrapper.cu in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
