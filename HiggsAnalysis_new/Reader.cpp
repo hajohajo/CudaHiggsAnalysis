@@ -40,10 +40,10 @@ Reader::Reader()
     metIndex = jetIndex + nJets * variablesPerJet;
     metVariables = 2;
 
-    numberOfVariables = nTaus*variablesPerTau + nJets*variablesPerJet + metVariables;
+    numberOfVariables = globalVariables + triggerVariables + nTaus*variablesPerTau + nHLTTaus*variablesPerHLTTau + nJets*variablesPerJet + metVariables;
     batchSize = 10;
     arrayToGPU = new float[numberOfVariables*batchSize];
-    nCores = 4;
+    nCores = 1;
     entryIndex = 0;
     
 }
@@ -62,7 +62,6 @@ void Reader::readToArray()
     
     auto workItem = [&](TTreeReader &reader)
     {
-        reader.SetEntriesRange(entryIndex, entryIndex+batchSize);
 
         //Trigger
         TTreeReaderValue<Double_t> L1MET_x(reader, "L1MET_x");
@@ -105,10 +104,10 @@ void Reader::readToArray()
         TTreeReaderValue<std::vector<bool>> jets_PUIDloose(reader, "Jets_PUIDloose");
         TTreeReaderValue<std::vector<bool>> jets_PUIDtight(reader, "Jets_PUIDtight");
 
+        reader.SetEntriesRange(entryIndex, entryIndex+batchSize);
         while (reader.Next())
         {
             unsigned long event = reader.GetCurrentEntry()-entryIndex;
-//            std::cout<<event<<std::endl;
 
             int localIndex = 0;
             
@@ -117,6 +116,7 @@ void Reader::readToArray()
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 1] = std::min((int)HLTTau_pt->size(), nHLTTaus); //nHLTTaus
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 2] = std::min((int)jets_pt->size(), nHLTTaus); //nJets
 			localIndex += globalVariables;
+//			std::cout<<localIndex<<" ";
 
 
             //Trigger variables
@@ -124,6 +124,7 @@ void Reader::readToArray()
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 1] = *L1MET_y;
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 2] = *HLT_LooseIsoPFTau50_Trk30_eta2p1_MET80_vx;
             localIndex += triggerVariables;
+//            std::cout<<localIndex<<" ";
             
             //Tau variables
             for(int j=0; j<nTaus; j++)
@@ -157,7 +158,7 @@ void Reader::readToArray()
                     arrayToGPU[(event*numberOfVariables)+(localIndex) + 10] = -99;
                 }
                 localIndex += variablesPerTau;
-                std::cout<<localIndex<<std::endl;
+//                std::cout<<localIndex<<" ";
             }
             //End of tau variables
             
@@ -177,7 +178,7 @@ void Reader::readToArray()
                     arrayToGPU[(event*numberOfVariables)+(localIndex) + 2] = -99;
                     arrayToGPU[(event*numberOfVariables)+(localIndex) + 3] = -99;
                 }
-                localIndex=+variablesPerHLTTau;
+                localIndex += variablesPerHLTTau;
             }
             
             //Jet variables
@@ -207,13 +208,16 @@ void Reader::readToArray()
                     arrayToGPU[(event*numberOfVariables)+(localIndex) + 6] = -99;
                     arrayToGPU[(event*numberOfVariables)+(localIndex) + 7] = -99;
                 }
-                localIndex+=variablesPerJet;
+                localIndex += variablesPerJet;
+//                std::cout<<localIndex<<" ";
             }
             
             //MET variables
             arrayToGPU[(event*numberOfVariables) + (localIndex) + 0] = *MET_Type1_x;
             arrayToGPU[(event*numberOfVariables) + (localIndex) + 1] = *MET_Type1_y;
-            localIndex+=metVariables;
+            localIndex += metVariables;
+//            std::cout<<localIndex<<" ";
+//            std::cout<<std::endl;
         }
     };
     
