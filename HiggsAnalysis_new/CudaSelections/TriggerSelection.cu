@@ -19,7 +19,8 @@ void triggerSelection(float *inputArray, bool *passedArray, float L1MetCut, int 
     int processIndex = blockIdx.x * blockDim.x + threadIdx.x;
     int localIndex = processIndex * variablesPerEvent;
     
-    if(processIndex<nEvents){
+    if(processIndex<nEvents)
+    {
         passedArray[processIndex]=((bool)inputArray[localIndex+triggerIndex+2] && L1METTrigger(inputArray[localIndex+triggerIndex+0], inputArray[localIndex+triggerIndex+1], L1MetCut));
     }
 }
