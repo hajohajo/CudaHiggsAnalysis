@@ -26,7 +26,7 @@ int main(int argc, const char * argv[]) {
     myReader.readToArray();
 
     float* myArray = myReader.getArrayToGPU();
-/*
+
     for(int i=0; i<myReader.getBatchSize()*myReader.getNumberOfVariables();i++)
     {
         if(i%myReader.getNumberOfVariables() == 0)
@@ -36,7 +36,7 @@ int main(int argc, const char * argv[]) {
         std::cout<<myArray[i]<<" ";
 
     }
-*/
+
     wrapper(myArray, myReader.getBatchSize(), myReader.getNumberOfVariables(), myReader.getTauIndex(), myReader.getHltIndex(),myReader.getNTaus());
     
 }

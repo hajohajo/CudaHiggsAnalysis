@@ -23,7 +23,7 @@ Reader::Reader()
     
     //MET Filters
     metFilterIndex = triggerIndex + triggerVariables;
-    metFilterVariables = 12;
+    metFilterVariables = 7;
     
     //Tau
     tauIndex = triggerIndex + triggerVariables;
@@ -44,7 +44,7 @@ Reader::Reader()
     metIndex = jetIndex + nJets * variablesPerJet;
     metVariables = 2;
 
-    numberOfVariables = globalVariables + triggerVariables + nTaus*variablesPerTau + nHLTTaus*variablesPerHLTTau + nJets*variablesPerJet + metVariables;
+    numberOfVariables = globalVariables + triggerVariables + metFilterVariables + nTaus*variablesPerTau + nHLTTaus*variablesPerHLTTau + nJets*variablesPerJet + metVariables;
     batchSize = 10;
     arrayToGPU = new float[numberOfVariables*batchSize];
     nCores = 1;
@@ -74,17 +74,17 @@ void Reader::readToArray()
         
         //METFilters
         TTreeReaderValue<Bool_t> METFilter_Flag_HBHENoiseFilter(reader, "METFilter_Flag_HBHENoiseFilter");
-        TTreeReaderValue<Bool_t> METFilter_Flag_HBHENoiseIsoFilter(reader, "METFilterFlag_HBHENoiseIsoFilter");
-        TTreeReaderValue<Bool_t> METFilter_Flag_CSCTightHaloFilter(reader, "METFilterFlag_CSCTightHaloFilter");
-        TTreeReaderValue<Bool_t> METFilter_Flag_EcalDeadCellTriggerPrimitiveFilter(reader, "METFilterFlag_EcalDeadCellTriggerPrimitiveFilter");
-        TTreeReaderValue<Bool_t> METFilter_Flag_goodVertices(reader, "METFilterFlag_Flag_goodVertices");
-        TTreeReaderValue<Bool_t> METFilter_Flag_eeBadScFilter(reader, "METFilterFlag_eeBadScFilter");
-        TTreeReaderValue<Bool_t> METFilter_Flag_globalTightHalo2016Filter(reader, "METFilterFlag_globalTightHalo2016Filter");
-        TTreeReaderValue<Bool_t> METFilter_Flag_hbheNoiseTokenRun2Loose(reader, "METFilterFlag_hbheNoiseTokenRun2Loose");
-        TTreeReaderValue<Bool_t> METFilter_Flag_hbheNoiseTokenRun2Tight(reader, "METFilterFlag_hbheNoiseTokenRun2Tight");
-        TTreeReaderValue<Bool_t> METFilter_Flag_hbheIsoNoiseToken(reader, "METFilterFlag_hbheIsoNoiseToken");
-        TTreeReaderValue<Bool_t> METFilter_Flag_badPFMuonFilter(reader, "METFilterFlag_badPFMuonFilter");
-        TTreeReaderValue<Bool_t> METFilter_Flag_badChargedCandidateFilter(reader, "METFilterFlag_badChargedCandidateFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_HBHENoiseIsoFilter(reader, "METFilter_Flag_HBHENoiseIsoFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_CSCTightHaloFilter(reader, "METFilter_Flag_CSCTightHaloFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_EcalDeadCellTriggerPrimitiveFilter(reader, "METFilter_Flag_EcalDeadCellTriggerPrimitiveFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_goodVertices(reader, "METFilter_Flag_goodVertices");
+        TTreeReaderValue<Bool_t> METFilter_Flag_eeBadScFilter(reader, "METFilter_Flag_eeBadScFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_globalTightHalo2016Filter(reader, "METFilter_Flag_globalTightHalo2016Filter");
+//        TTreeReaderValue<Bool_t> METFilter_Flag_hbheNoiseTokenRun2Loose(reader, "METFilter_Flag_hbheNoiseTokenRun2Loose");
+//        TTreeReaderValue<Bool_t> METFilter_Flag_hbheNoiseTokenRun2Tight(reader, "METFilter_Flag_hbheNoiseTokenRun2Tight");
+//        TTreeReaderValue<Bool_t> METFilter_Flag_hbheIsoNoiseToken(reader, "METFilter_Flag_hbheIsoNoiseToken");
+//        TTreeReaderValue<Bool_t> METFilter_Flag_badPFMuonFilter(reader, "METFilter_Flag_badPFMuonFilter");
+//        TTreeReaderValue<Bool_t> METFilter_Flag_badChargedCandidateFilter(reader, "METFilter_Flag_badChargedCandidateFilter");
         
         //Taus
         TTreeReaderValue<std::vector<Double_t>> taus_pt(reader, "Taus_pt");
@@ -152,11 +152,11 @@ void Reader::readToArray()
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 4] = *METFilter_Flag_goodVertices;
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 5] = *METFilter_Flag_eeBadScFilter;
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 6] = *METFilter_Flag_globalTightHalo2016Filter;
-            arrayToGPU[(event*numberOfVariables)+(localIndex) + 7] = *METFilter_Flag_hbheNoiseTokenRun2Loose;
-            arrayToGPU[(event*numberOfVariables)+(localIndex) + 8] = *METFilter_Flag_hbheNoiseTokenRun2Tight;
-            arrayToGPU[(event*numberOfVariables)+(localIndex) + 9] = *METFilter_Flag_hbheIsoNoiseToken;
-            arrayToGPU[(event*numberOfVariables)+(localIndex) + 10] = *METFilter_Flag_badPFMuonFilter;
-            arrayToGPU[(event*numberOfVariables)+(localIndex) + 11] = *METFilter_Flag_badChargedCandidateFilter;
+//            arrayToGPU[(event*numberOfVariables)+(localIndex) + 7] = *METFilter_Flag_hbheNoiseTokenRun2Loose;
+//            arrayToGPU[(event*numberOfVariables)+(localIndex) + 7] = *METFilter_Flag_hbheNoiseTokenRun2Tight;
+//            arrayToGPU[(event*numberOfVariables)+(localIndex) + 7] = *METFilter_Flag_hbheIsoNoiseToken;
+//            arrayToGPU[(event*numberOfVariables)+(localIndex) + 7] = *METFilter_Flag_badPFMuonFilter;
+//            arrayToGPU[(event*numberOfVariables)+(localIndex) + 7] = *METFilter_Flag_badChargedCandidateFilter;
             localIndex += metFilterVariables;
             
             //Tau variables
