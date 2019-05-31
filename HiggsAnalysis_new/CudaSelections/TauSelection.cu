@@ -88,7 +88,7 @@ void tauSelection(float *inputArray, bool *passedArray, bool *passed, bool *sele
         int localIndex = processIndex * variablesPerEvent;
 
         bool _passed = false;
-        
+
         //Tau loop
         for(int j=0; j<inputArray[processIndex*variablesPerEvent+0]; j++)
         {
@@ -100,8 +100,8 @@ void tauSelection(float *inputArray, bool *passedArray, bool *passed, bool *sele
             selectedTaus[thisTau]=passElectronDiscriminator(inputArray[localIndex+tauIndex+j*11+8])&&selectedTaus[thisTau];
             selectedTaus[thisTau]=passMuonDiscriminator(inputArray[localIndex+tauIndex+j*11+9])&&selectedTaus[thisTau];
             selectedTaus[thisTau]=passTauIsolation(inputArray[localIndex+tauIndex+j*11+10])&&selectedTaus[thisTau];
-            bool _passed = _passed || selectedTaus[thisTau];
+            _passed = (_passed || selectedTaus[thisTau]);
         }
-        passed[processIndex]=_passed && passed[processIndex];
+        passed[processIndex]=passed[processIndex] && _passed;
     }
 }

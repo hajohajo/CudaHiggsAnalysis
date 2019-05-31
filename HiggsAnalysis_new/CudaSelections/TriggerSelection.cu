@@ -22,6 +22,6 @@ void triggerSelection(float *inputArray, bool *passedArray, bool *passed, float 
     if(processIndex<nEvents)
     {
         passedArray[processIndex]=((bool)inputArray[localIndex+triggerIndex+2] && L1METTrigger(inputArray[localIndex+triggerIndex+0], inputArray[localIndex+triggerIndex+1], L1MetCut));
-            passed = passed[processIndex] && passedArray[processIndex];
+        passed[processIndex] = passed[processIndex] && passedArray[processIndex];
     }
 }

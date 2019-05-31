@@ -7,6 +7,8 @@
 //
 
 #include <iostream>
+#include <numeric>
+#include <vector>
 #include "wrapper.h"
 #include "TriggerSelection.cuh"
 #include "METFilterSelection.cuh"
@@ -16,7 +18,7 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
 {
     float *d_array, *d_numericalResults, *h_numericalResults;
     bool *d_passedResults, *h_passedResults, *d_selectedTaus, *h_selectedTaus, *d_passedTrigger, *h_passedTrigger, *d_passedMETFilter, *h_passedMETFilter;
-    bool *d_passed, *h_passed;
+    bool *d_passed, *h_passed, *d_passedTaus, *h_passedTaus;
     int nFloatResults = 3;
     int nSelections = 3;
     int nTrigger = 1;
@@ -52,18 +54,19 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
 //    int blocks = (100000+1024)/1024; //<<<blocks, 1024>>>
     triggerSelection<<<1, entries>>>(d_array, d_passedTrigger, d_passed, L1MetCut, nVariables, entries, triggerIndex);
     metFilterSelection<<<1, entries>>>(d_array, d_passedMETFilter, d_passed, nVariables, entries, metFilterIndex);
-    tauSelection<<<1, entries>>>(d_array, d_passedResults, d_selectedTaus, d_numericalResults, d_passed, nVariables, tauIndex, hltIndex, nTaus, entries);
+    tauSelection<<<1, entries>>>(d_array, d_passedResults, d_passed, d_selectedTaus, d_numericalResults, nVariables, tauIndex, hltIndex, nTaus, entries);
 
 
     std::cout<<std::endl;
     std::cout<<"Selection done"<<std::endl;
-    cudaMemcpy(h_passedResults, d_passedResults, entries*nSelections*sizeof(bool), cudaMemcpyDeviceToHost);
-    cudaMemcpy(h_numericalResults, d_numericalResults, entries*nFloatResults*sizeof(float), cudaMemcpyDeviceToHost);
+//    cudaMemcpy(h_passedResults, d_passedResults, entries*nSelections*sizeof(bool), cudaMemcpyDeviceToHost);
+//    cudaMemcpy(h_numericalResults, d_numericalResults, entries*nFloatResults*sizeof(float), cudaMemcpyDeviceToHost);
     cudaMemcpy(h_selectedTaus, d_selectedTaus, entries*nTaus*sizeof(bool), cudaMemcpyDeviceToHost);
     cudaMemcpy(h_passedTrigger, d_passedTrigger, entries*nTrigger*sizeof(bool), cudaMemcpyDeviceToHost);
     cudaMemcpy(h_passedMETFilter, d_passedMETFilter, entries*nMETFilter*sizeof(bool), cudaMemcpyDeviceToHost);
     cudaMemcpy(h_passed, d_passed, entries*1*sizeof(bool), cudaMemcpyDeviceToHost);
 
+/*
     for(int i=0; i<entries*nSelections;i++)
     {
         if(i%nSelections==0)
@@ -74,7 +77,7 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
 
     }
     std::cout<<std::endl;
-    
+*/
 /*    for(int j=0; j<entries*nFloatResults; j++)
     {
         if(j%nFloatResults==0)
@@ -84,7 +87,6 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
         std::cout<<h_numericalResults[j]<<" ";
     }
     */
-    
 /*
     for(int i = 0; i<entries*nTaus;i++)
     {
@@ -106,6 +108,7 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
         std::cout<<h_passedTrigger[i]<<" ";
     }
 */
+/*
     for(int i = 0; i<entries*nMETFilter;i++)
     {
         if(i%nMETFilter==0)
@@ -114,6 +117,22 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
         }
         std::cout<<h_passedMETFilter[i]<<" ";
     }
+    
+*/
+/*    for(int i = 0; i<entries;i++)
+    {
+        std::cout<<std::endl;
+        std::cout<<h_passed[i];
+    }
+    std::cout<<std::endl;
+*/
+    int sum = 0;
+    for(int i = 0; i<entries;i++)
+    {
+        sum += h_passed[i];
+    }
+
+    std::cout<<sum<<" out of "<<entries<<std::endl;
 
     std::cout<<std::endl;
     cudaFree(d_array);
@@ -121,4 +140,5 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
     cudaFree(d_numericalResults);
     cudaFree(d_passedTrigger);
     cudaFree(d_passedMETFilter);
+    cudaFree(d_passed);
 }

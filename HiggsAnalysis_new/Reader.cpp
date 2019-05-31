@@ -26,7 +26,7 @@ Reader::Reader()
     metFilterVariables = 7;
     
     //Tau
-    tauIndex = triggerIndex + triggerVariables;
+    tauIndex = metFilterIndex + metFilterVariables;
     nTaus = 8;
     variablesPerTau = 11;
     
@@ -45,7 +45,7 @@ Reader::Reader()
     metVariables = 2;
 
     numberOfVariables = globalVariables + triggerVariables + metFilterVariables + nTaus*variablesPerTau + nHLTTaus*variablesPerHLTTau + nJets*variablesPerJet + metVariables;
-    batchSize = 10;
+    batchSize = 1000;
     arrayToGPU = new float[numberOfVariables*batchSize];
     nCores = 1;
     entryIndex = 0;
