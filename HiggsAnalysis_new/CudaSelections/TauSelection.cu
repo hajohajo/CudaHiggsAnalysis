@@ -78,26 +78,30 @@ bool passTauIsolation(int tauIsolationDiscriminator)
 }
 
 __global__
-void tauSelection(float *inputArray, bool *passedArray, bool *selectedTaus, float *numericalResults, int variablesPerEvent, int tauIndex, int hltIndex, int nTaus)
+void tauSelection(float *inputArray, bool *passedArray, bool *passed, bool *selectedTaus, float *numericalResults, int variablesPerEvent, int tauIndex, int hltIndex, int nTaus, int nEvents)
 {
 	//Index of the processed event
 	int processIndex = blockIdx.x * blockDim.x + threadIdx.x;
+    if(processIndex<nEvents)
+    {
+        //Index of the first variable of the event processed in the inputArray
+        int localIndex = processIndex * variablesPerEvent;
 
-	//Index of the first variable of the event processed in the inputArray
-	int localIndex = processIndex * variablesPerEvent;
-
-    //Tau loop
-	for(int j=0; j<inputArray[processIndex*variablesPerEvent+0]; j++)
-	{
-	    int thisTau = processIndex*nTaus+j;
-		selectedTaus[thisTau]=passTriggerMatching(localIndex+tauIndex+j*11, localIndex+hltIndex, nTaus,  0.4, inputArray, numericalResults, processIndex);
-		selectedTaus[thisTau]=passNProngsCut(inputArray[localIndex+tauIndex+j*11+5], inputArray[localIndex+tauIndex+j*11+6])&&selectedTaus[thisTau];
-		selectedTaus[thisTau]=passDecayModeFinding(inputArray[localIndex+tauIndex+j*11+7])&&selectedTaus[thisTau];
-		selectedTaus[thisTau]=passGenericDiscriminators()&&selectedTaus[thisTau];
-		selectedTaus[thisTau]=passElectronDiscriminator(inputArray[localIndex+tauIndex+j*11+8])&&selectedTaus[thisTau];
-		selectedTaus[thisTau]=passMuonDiscriminator(inputArray[localIndex+tauIndex+j*11+9])&&selectedTaus[thisTau];
-	    selectedTaus[thisTau]=passTauIsolation(inputArray[localIndex+tauIndex+j*11+10])&&selectedTaus[thisTau];
-	}
-
-
+        bool _passed = false;
+        
+        //Tau loop
+        for(int j=0; j<inputArray[processIndex*variablesPerEvent+0]; j++)
+        {
+            int thisTau = processIndex*nTaus+j;
+            selectedTaus[thisTau]=passTriggerMatching(localIndex+tauIndex+j*11, localIndex+hltIndex, nTaus,  0.4, inputArray, numericalResults, processIndex);
+            selectedTaus[thisTau]=passNProngsCut(inputArray[localIndex+tauIndex+j*11+5], inputArray[localIndex+tauIndex+j*11+6])&&selectedTaus[thisTau];
+            selectedTaus[thisTau]=passDecayModeFinding(inputArray[localIndex+tauIndex+j*11+7])&&selectedTaus[thisTau];
+            selectedTaus[thisTau]=passGenericDiscriminators()&&selectedTaus[thisTau];
+            selectedTaus[thisTau]=passElectronDiscriminator(inputArray[localIndex+tauIndex+j*11+8])&&selectedTaus[thisTau];
+            selectedTaus[thisTau]=passMuonDiscriminator(inputArray[localIndex+tauIndex+j*11+9])&&selectedTaus[thisTau];
+            selectedTaus[thisTau]=passTauIsolation(inputArray[localIndex+tauIndex+j*11+10])&&selectedTaus[thisTau];
+            bool _passed = _passed || selectedTaus[thisTau];
+        }
+        passed[processIndex]=_passed && passed[processIndex];
+    }
 }

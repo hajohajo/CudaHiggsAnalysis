@@ -14,7 +14,7 @@ bool L1METTrigger(float L1MET_x, float L1MET_y, float L1MET_cut)
 }
 
 __global__
-void triggerSelection(float *inputArray, bool *passedArray, float L1MetCut, int variablesPerEvent, int nEvents, int triggerIndex)
+void triggerSelection(float *inputArray, bool *passedArray, bool *passed, float L1MetCut, int variablesPerEvent, int nEvents, int triggerIndex)
 {
     int processIndex = blockIdx.x * blockDim.x + threadIdx.x;
     int localIndex = processIndex * variablesPerEvent;
@@ -22,5 +22,6 @@ void triggerSelection(float *inputArray, bool *passedArray, float L1MetCut, int 
     if(processIndex<nEvents)
     {
         passedArray[processIndex]=((bool)inputArray[localIndex+triggerIndex+2] && L1METTrigger(inputArray[localIndex+triggerIndex+0], inputArray[localIndex+triggerIndex+1], L1MetCut));
+            passed = passed[processIndex] && passedArray[processIndex];
     }
 }

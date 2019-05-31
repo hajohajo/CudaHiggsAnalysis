@@ -8,4 +8,4 @@
 
 #pragma once
 
-extern __global__ void metFilterSelection(float *inputArray, bool *passedArray, int variablesPerEvent, int nEvents, int metFilterIndex);
+extern __global__ void metFilterSelection(float *inputArray, bool *passedArray, bool *passed, int variablesPerEvent, int nEvents, int metFilterIndex);

@@ -43,7 +43,7 @@
 		663719E422A14DF90024E563 /* METFilterSelection.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = METFilterSelection.cuh; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		667BCCCD229D8DEE00DDE258 /* loitsu.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loitsu.txt; sourceTree = "<group>"; };
 		667BCCCF229D8E3100DDE258 /* wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wrapper.h; sourceTree = "<group>"; };
-		66C144FE229D5BCB00DCDA95 /* wrapper.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = wrapper.cu; sourceTree = "<group>"; };
+		66C144FE229D5BCB00DCDA95 /* wrapper.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = wrapper.cu; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
