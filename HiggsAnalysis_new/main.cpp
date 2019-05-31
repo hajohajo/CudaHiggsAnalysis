@@ -16,8 +16,8 @@
 int main(int argc, const char * argv[]) {
 
 //    std::string files[1] = {"/Users/hajohajo/Documents/histograms-TT-0.root"};
-    std::string files[1] = {"/work/data/multicrab_Training/histograms-TT-0.root"};
-//    std::string files[1] = {"/work/data/multicrab_Training/histograms-ChargedHiggs_HplusTB_HplusToTauNu_M_500-0.root"};
+//    std::string files[1] = {"/work/data/multicrab_Training/histograms-TT-0.root"};
+    std::string files[1] = {"/work/data/multicrab_Training/histograms-ChargedHiggs_HplusTB_HplusToTauNu_M_500-0.root"};
     std::vector<std::string> filevector;
     filevector.assign(&files[0], &files[0]+1);
     

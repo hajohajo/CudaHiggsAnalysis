@@ -13,6 +13,6 @@ void triggerSelection(float *inputArray, bool *passedArray, int variablesPerEven
     int localIndex = processIndex * variablesPerEvent;
     
     if(processIndex<nEvents){
-        passedArray[processIndex]=inputArray[localIndex+triggerIndex]
+        passedArray[processIndex]=inputArray[localIndex+triggerIndex];
     }
 }

@@ -35,7 +35,7 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
     cudaMemset(d_passedResults, 0, entries*nSelections*sizeof(bool));
     cudaMemset(d_numericalResults, 0.0, entries*nSelections*sizeof(float));
     cudaMemset(d_selectedTaus, 0, entries*nTaus*sizeof(bool));
-    cudaMemeset(d_passedTrigger, 0, entries*nTrigger*sizeof(bool));
+    cudaMemset(d_passedTrigger, 0, entries*nTrigger*sizeof(bool));
 
 //    int blocks = (100000+1024)/1024; //<<<blocks, 1024>>>
     tauSelection<<<1, entries>>>(d_array, d_passedResults, d_selectedTaus, d_numericalResults, nVariables, tauIndex, hltIndex, nTaus);
