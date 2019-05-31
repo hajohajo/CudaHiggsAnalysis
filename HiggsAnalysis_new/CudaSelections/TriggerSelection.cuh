@@ -8,4 +8,4 @@
 
 #pragma once
 
-extern __global__ void triggerSelection(float *inputArray, bool *passedArray, int variablesPerEvent, int nEvents, int triggerIndex);
+extern __global__ void triggerSelection(float *inputArray, bool *passedArray, float L1MetCut, int variablesPerEvent, int nEvents, int triggerIndex);

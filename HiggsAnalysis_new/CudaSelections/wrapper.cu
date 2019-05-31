@@ -18,6 +18,8 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
     int nFloatResults = 3;
     int nSelections = 3;
     int nTrigger = 1;
+    int triggerIndex = 3;
+    float L1MetCut = 80.f;
     
     h_passedResults = (bool*)calloc(entries*nSelections,sizeof(bool));
     h_numericalResults = (float*)calloc(entries*nFloatResults,sizeof(float));
@@ -38,6 +40,7 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
     cudaMemset(d_passedTrigger, 0, entries*nTrigger*sizeof(bool));
 
 //    int blocks = (100000+1024)/1024; //<<<blocks, 1024>>>
+    triggerSelection<<<1, entries>>>(d_array, d_passedTrigger, L1MetCut, nVariables, entries, triggerIndex);
     tauSelection<<<1, entries>>>(d_array, d_passedResults, d_selectedTaus, d_numericalResults, nVariables, tauIndex, hltIndex, nTaus);
     std::cout<<std::endl;
     std::cout<<"Selection done"<<std::endl;
