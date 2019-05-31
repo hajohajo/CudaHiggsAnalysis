@@ -11,6 +11,7 @@
 		6624DFD8228AE780005B8886 /* TauSelection.cu in Sources */ = {isa = PBXBuildFile; fileRef = 6624DFD6228AE780005B8886 /* TauSelection.cu */; };
 		6629F855228020200082F6DB /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6629F854228020200082F6DB /* main.cpp */; };
 		6629F863228031120082F6DB /* Dataset.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6629F861228031120082F6DB /* Dataset.cpp */; };
+		663719E222A120800024E563 /* TriggerSelection.cu in Sources */ = {isa = PBXBuildFile; fileRef = 663719E022A120800024E563 /* TriggerSelection.cu */; };
 		66C14500229D5BCB00DCDA95 /* wrapper.cu in Sources */ = {isa = PBXBuildFile; fileRef = 66C144FE229D5BCB00DCDA95 /* wrapper.cu */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,8 @@
 		6629F854228020200082F6DB /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		6629F861228031120082F6DB /* Dataset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Dataset.cpp; sourceTree = "<group>"; };
 		6629F862228031120082F6DB /* Dataset.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Dataset.hpp; sourceTree = "<group>"; };
+		663719E022A120800024E563 /* TriggerSelection.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = TriggerSelection.cu; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		663719E122A120800024E563 /* TriggerSelection.cuh */ = {isa = PBXFileReference; lastKnownFileType = text; path = TriggerSelection.cuh; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
 		667BCCCD229D8DEE00DDE258 /* loitsu.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loitsu.txt; sourceTree = "<group>"; };
 		667BCCCF229D8E3100DDE258 /* wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wrapper.h; sourceTree = "<group>"; };
 		66C144FE229D5BCB00DCDA95 /* wrapper.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = wrapper.cu; sourceTree = "<group>"; };
@@ -58,6 +61,8 @@
 				667BCCCF229D8E3100DDE258 /* wrapper.h */,
 				6624DFD6228AE780005B8886 /* TauSelection.cu */,
 				6624DFD7228AE780005B8886 /* TauSelection.cuh */,
+				663719E022A120800024E563 /* TriggerSelection.cu */,
+				663719E122A120800024E563 /* TriggerSelection.cuh */,
 			);
 			path = CudaSelections;
 			sourceTree = "<group>";
@@ -149,6 +154,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6629F855228020200082F6DB /* main.cpp in Sources */,
+				663719E222A120800024E563 /* TriggerSelection.cu in Sources */,
 				6624DFD8228AE780005B8886 /* TauSelection.cu in Sources */,
 				6629F863228031120082F6DB /* Dataset.cpp in Sources */,
 				660611952289A4F000BD0CC3 /* Reader.cpp in Sources */,
