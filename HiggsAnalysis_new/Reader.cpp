@@ -21,6 +21,10 @@ Reader::Reader()
     triggerIndex = globalIndex + globalVariables;
     triggerVariables = 3;
     
+    //MET Filters
+    metFilterIndex = triggerIndex + triggerVariables;
+    metFilterVariables = 12;
+    
     //Tau
     tauIndex = triggerIndex + triggerVariables;
     nTaus = 8;
@@ -67,6 +71,20 @@ void Reader::readToArray()
         TTreeReaderValue<Double_t> L1MET_x(reader, "L1MET_x");
         TTreeReaderValue<Double_t> L1MET_y(reader, "L1MET_y");
         TTreeReaderValue<Bool_t> HLT_LooseIsoPFTau50_Trk30_eta2p1_MET80_vx(reader, "HLT_LooseIsoPFTau50_Trk30_eta2p1_MET80_vx");
+        
+        //METFilters
+        TTreeReaderValue<Bool_t> METFilter_Flag_HBHENoiseFilter(reader, "METFilter_Flag_HBHENoiseFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_HBHENoiseIsoFilter(reader, "METFilterFlag_HBHENoiseIsoFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_CSCTightHaloFilter(reader, "METFilterFlag_CSCTightHaloFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_EcalDeadCellTriggerPrimitiveFilter(reader, "METFilterFlag_EcalDeadCellTriggerPrimitiveFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_goodVertices(reader, "METFilterFlag_Flag_goodVertices");
+        TTreeReaderValue<Bool_t> METFilter_Flag_eeBadScFilter(reader, "METFilterFlag_eeBadScFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_globalTightHalo2016Filter(reader, "METFilterFlag_globalTightHalo2016Filter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_hbheNoiseTokenRun2Loose(reader, "METFilterFlag_hbheNoiseTokenRun2Loose");
+        TTreeReaderValue<Bool_t> METFilter_Flag_hbheNoiseTokenRun2Tight(reader, "METFilterFlag_hbheNoiseTokenRun2Tight");
+        TTreeReaderValue<Bool_t> METFilter_Flag_hbheIsoNoiseToken(reader, "METFilterFlag_hbheIsoNoiseToken");
+        TTreeReaderValue<Bool_t> METFilter_Flag_badPFMuonFilter(reader, "METFilterFlag_badPFMuonFilter");
+        TTreeReaderValue<Bool_t> METFilter_Flag_badChargedCandidateFilter(reader, "METFilterFlag_badChargedCandidateFilter");
         
         //Taus
         TTreeReaderValue<std::vector<Double_t>> taus_pt(reader, "Taus_pt");
@@ -125,6 +143,21 @@ void Reader::readToArray()
             arrayToGPU[(event*numberOfVariables)+(localIndex) + 2] = *HLT_LooseIsoPFTau50_Trk30_eta2p1_MET80_vx;
             localIndex += triggerVariables;
 //            std::cout<<localIndex<<" ";
+            
+            //METFilter variables
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 0] = *METFilter_Flag_HBHENoiseFilter;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 1] = *METFilter_Flag_HBHENoiseIsoFilter;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 2] = *METFilter_Flag_CSCTightHaloFilter;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 3] = *METFilter_Flag_EcalDeadCellTriggerPrimitiveFilter;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 4] = *METFilter_Flag_goodVertices;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 5] = *METFilter_Flag_eeBadScFilter;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 6] = *METFilter_Flag_globalTightHalo2016Filter;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 7] = *METFilter_Flag_hbheNoiseTokenRun2Loose;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 8] = *METFilter_Flag_hbheNoiseTokenRun2Tight;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 9] = *METFilter_Flag_hbheIsoNoiseToken;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 10] = *METFilter_Flag_badPFMuonFilter;
+            arrayToGPU[(event*numberOfVariables)+(localIndex) + 11] = *METFilter_Flag_badChargedCandidateFilter;
+            localIndex += metFilterVariables;
             
             //Tau variables
             for(int j=0; j<nTaus; j++)

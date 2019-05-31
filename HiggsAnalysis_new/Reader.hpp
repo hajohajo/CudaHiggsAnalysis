@@ -58,6 +58,10 @@ private:
     //Trigger
     int triggerIndex;
     int triggerVariables;
+
+    //MET filters
+    int metFilterIndex;
+    int metFilterVariables;
     
     //Taus
     int tauIndex;
