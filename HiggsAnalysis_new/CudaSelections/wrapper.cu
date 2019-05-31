@@ -9,6 +9,7 @@
 #include <iostream>
 #include "wrapper.h"
 #include "TriggerSelection.cuh"
+#include "METFilterSelection.cuh"
 #include "TauSelection.cuh"
 
 void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltIndex, int nTaus)
