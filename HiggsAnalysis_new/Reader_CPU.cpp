@@ -10,6 +10,7 @@
 #include <TH1.h>
 #include <TChain.h>
 #include <TTreeReader.h>
+#include <TFile.h>
 
 Reader_CPU::Reader_CPU()
 {
@@ -47,7 +48,7 @@ Reader_CPU::Reader_CPU()
     metVariables = 2;
     
     numberOfVariables = globalVariables + triggerVariables + metFilterVariables + nTaus*variablesPerTau + nHLTTaus*variablesPerHLTTau + nJets*variablesPerJet + metVariables;
-    batchSize = 20;
+    batchSize = 2000;
     //    arrayToGPU = new float[numberOfVariables*batchSize];
     nCores = 1;
     entryIndex = 0;
@@ -64,8 +65,12 @@ void Reader_CPU::readToArray()
     }
     long long nEntries = chain.GetEntries();
     TTreeReader reader(&chain);
+    reader.SetEntriesRange(0, 10000000);
     
     long long batches = nEntries/batchSize;
+    
+    TFile *f = new TFile("histos.root","recreate");
+    TH1F passHist("passed","passed;Events", 2, 0, 2);
     
     //Trigger
     TTreeReaderValue<Double_t> L1MET_x(reader, "L1MET_x");
@@ -132,6 +137,11 @@ void Reader_CPU::readToArray()
             int passed = 0;
             passed = wrapper(arrayToGPU, batchSize, this->getNumberOfVariables(), this->getTauIndex(), this->getHltIndex(),this->getNTaus());
             std::cout<<"Passed "<<passed<<std::endl;
+            
+            passHist.Fill(0.0, (float)batchSize);
+            passHist.Fill(1.0, (float)passed);
+
+
             arrayToGPU = new float[numberOfVariables*batchSize];
             batchEntries = 0;
         }
@@ -260,6 +270,8 @@ void Reader_CPU::readToArray()
         //            std::cout<<localIndex<<" ";
         //            std::cout<<std::endl;
     }
+    passHist.Write();
+    f->Close();
     
 }
 
