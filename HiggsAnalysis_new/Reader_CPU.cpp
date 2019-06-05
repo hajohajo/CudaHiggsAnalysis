@@ -262,3 +262,39 @@ void Reader_CPU::readToArray()
     }
     
 }
+
+
+void Reader_CPU::setFiles(std::vector<std::string> files)
+{
+    inputFiles = files;
+}
+
+float* Reader_CPU::getArrayToGPU()
+{
+    return arrayToGPU;
+}
+
+int Reader_CPU::getNumberOfVariables()
+{
+    return numberOfVariables;
+}
+
+int Reader_CPU::getBatchSize()
+{
+    return batchSize;
+}
+
+int Reader_CPU::getTauIndex()
+{
+    return tauIndex;
+}
+
+int Reader_CPU::getHltIndex()
+{
+    return hltIndex;
+}
+
+int Reader_CPU::getNTaus()
+{
+    return nTaus;
+}
