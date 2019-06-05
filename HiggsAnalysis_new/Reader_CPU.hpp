@@ -11,7 +11,7 @@
 
 #include <stdio.h>
 #include <vector>
-#include <string.h>
+#include <string>
 #include "CudaSelections/wrapper.h"
 class Reader_CPU
 {
