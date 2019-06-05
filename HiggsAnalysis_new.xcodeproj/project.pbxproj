@@ -14,6 +14,7 @@
 		663719E222A120800024E563 /* TriggerSelection.cu in Sources */ = {isa = PBXBuildFile; fileRef = 663719E022A120800024E563 /* TriggerSelection.cu */; };
 		663719E522A14DF90024E563 /* METFilterSelection.cu in Sources */ = {isa = PBXBuildFile; fileRef = 663719E322A14DF90024E563 /* METFilterSelection.cu */; };
 		66C14500229D5BCB00DCDA95 /* wrapper.cu in Sources */ = {isa = PBXBuildFile; fileRef = 66C144FE229D5BCB00DCDA95 /* wrapper.cu */; };
+		66E8BBE822A7C28F00A65910 /* Reader_CPU.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 66E8BBE622A7C28F00A65910 /* Reader_CPU.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +45,8 @@
 		667BCCCD229D8DEE00DDE258 /* loitsu.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = loitsu.txt; sourceTree = "<group>"; };
 		667BCCCF229D8E3100DDE258 /* wrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = wrapper.h; sourceTree = "<group>"; };
 		66C144FE229D5BCB00DCDA95 /* wrapper.cu */ = {isa = PBXFileReference; lastKnownFileType = text; path = wrapper.cu; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.cpp; };
+		66E8BBE622A7C28F00A65910 /* Reader_CPU.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Reader_CPU.cpp; sourceTree = "<group>"; };
+		66E8BBE722A7C28F00A65910 /* Reader_CPU.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Reader_CPU.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +97,8 @@
 				6629F854228020200082F6DB /* main.cpp */,
 				660611932289A4F000BD0CC3 /* Reader.cpp */,
 				660611942289A4F000BD0CC3 /* Reader.hpp */,
+				66E8BBE622A7C28F00A65910 /* Reader_CPU.cpp */,
+				66E8BBE722A7C28F00A65910 /* Reader_CPU.hpp */,
 				6629F861228031120082F6DB /* Dataset.cpp */,
 				6629F862228031120082F6DB /* Dataset.hpp */,
 				667BCCCD229D8DEE00DDE258 /* loitsu.txt */,
@@ -159,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6629F855228020200082F6DB /* main.cpp in Sources */,
+				66E8BBE822A7C28F00A65910 /* Reader_CPU.cpp in Sources */,
 				663719E522A14DF90024E563 /* METFilterSelection.cu in Sources */,
 				663719E222A120800024E563 /* TriggerSelection.cu in Sources */,
 				6624DFD8228AE780005B8886 /* TauSelection.cu in Sources */,

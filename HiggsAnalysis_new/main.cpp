@@ -8,7 +8,8 @@
 
 #include <iostream>
 //#include "Selections/TauSelection.hpp"
-#include "Reader.hpp"
+//#include "Reader.hpp"
+#include "Reader_CPU.hpp"
 #include <vector>
 #include <boost/filesystem.hpp>
 #include <ROOT/TTreeProcessorMT.hxx>
@@ -30,7 +31,7 @@ int main(int argc, const char * argv[]) {
 
 //    filevector.assign(&files[0], &files[0]+1);
     
-    Reader myReader = Reader();
+    Reader_CPU myReader = Reader_CPU();
     myReader.setFiles(filevector);
     myReader.readToArray();
 
