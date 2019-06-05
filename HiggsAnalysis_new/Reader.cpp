@@ -7,7 +7,7 @@
 //
 
 #include "Reader.hpp"
-
+#include "CudaSelections/wrapper.h"
 Reader::Reader()
 {
     
@@ -45,8 +45,8 @@ Reader::Reader()
     metVariables = 2;
 
     numberOfVariables = globalVariables + triggerVariables + metFilterVariables + nTaus*variablesPerTau + nHLTTaus*variablesPerHLTTau + nJets*variablesPerJet + metVariables;
-    batchSize = 1000;
-    arrayToGPU = new float[numberOfVariables*batchSize];
+    batchSize = 20;
+//    arrayToGPU = new float[numberOfVariables*batchSize];
     nCores = 1;
     entryIndex = 0;
     
@@ -56,17 +56,40 @@ Reader::~Reader(){};
 void Reader::readToArray()
 {
     std::vector<std::string_view> files_stringview;
+    TChain chain("Events");
     for(std::string & file : inputFiles)
     {
-        files_stringview.push_back((std::string_view)file.c_str());
+        chain.Add(file.c_str(), -1);
+//        files_stringview.push_back((std::string_view)file.c_str());
     }
-    
-    ROOT::EnableImplicitMT(nCores);
-    ROOT::TTreeProcessorMT treeProcessor(files_stringview, "Events");
-    
+
+    int totalEntries = chain.GetEntries();
+//    ROOT::EnableImplicitMT(nCores);
+    ROOT::TTreeProcessorMT treeProcessor(chain); //(files_stringview, "Events");
+
+    std::cout<<"Max tasks per worker "<<treeProcessor.GetMaxTasksPerFilePerWorker()<<std::endl;
+
+    //Histogram for all/passed
+//    ROOT::TThreadedObject<TH1F> passHist("Passed", "p;test", 2, 0, 1);
+
+
+    ROOT::TThreadedObject<TH1F> passHist("passed","passed;Events", 2, 0, 2);
+//    ROOT::TThreadedObject<TH1F> passHist("pt_dist", "p_{T} Distribution;p_{T};dN/p_{T}dp_{T}", 100, 0, 5);
+//    ROOT::TThreadedObject<float*> testArr = new float[numberOfVariables*(3988)];
     auto workItem = [&](TTreeReader &reader)
     {
-
+//        std::cout<<reader.GetCurrentEntry()<<" "<<this->getBatchSize()<<std::endl;
+        std::pair<int,int> firstLast = reader.GetEntriesRange();
+//        std::cout<<firstLast.first<<" "<<firstLast.second<<std::endl;
+        int batchSize = firstLast.second-firstLast.first;
+//        std::cout<<"BatchSize "<<batchSize<<std::endl;
+        float* arrayToGPU = new float[numberOfVariables*(firstLast.second-firstLast.first)];
+//        auto arrayToGPU = testArr.Get();
+        auto myPassHist = passHist.Get();
+        
+        //Event
+        TTreeReaderValue<ULong64_t> Event(reader, "event");
+        
         //Trigger
         TTreeReaderValue<Double_t> L1MET_x(reader, "L1MET_x");
         TTreeReaderValue<Double_t> L1MET_y(reader, "L1MET_y");
@@ -122,11 +145,16 @@ void Reader::readToArray()
         TTreeReaderValue<std::vector<bool>> jets_PUIDloose(reader, "Jets_PUIDloose");
         TTreeReaderValue<std::vector<bool>> jets_PUIDtight(reader, "Jets_PUIDtight");
 
-        reader.SetEntriesRange(entryIndex, entryIndex+batchSize);
+//        reader.Next();
+//        int entry = *Event;
+//        reader.SetEntry(reader.GetCurrentEntry()-1);
+        int event = -1;
         while (reader.Next())
         {
-            unsigned long event = reader.GetCurrentEntry()-entryIndex;
+            event++;
+//            int event = reader.GetCurrentEntry();//-entry;
 
+//            std::cout<<entry<<std::endl;
             int localIndex = 0;
             
 			//Global variables
@@ -252,12 +280,22 @@ void Reader::readToArray()
 //            std::cout<<localIndex<<" ";
 //            std::cout<<std::endl;
         }
+//        int passed = 0;
+//        passed = wrapper(arrayToGPU, batchSize, this->getNumberOfVariables(), this->getTauIndex(), this->getHltIndex(),this->getNTaus());
+        myPassHist->SetBinContent(1, batchSize);
+        myPassHist->SetBinContent(2, wrapper(arrayToGPU, batchSize, this->getNumberOfVariables(), this->getTauIndex(), this->getHltIndex(),this->getNTaus()));
     };
-    
+
     treeProcessor.Process(workItem);
-    entryIndex = entryIndex+batchSize;
+//    entryIndex = entryIndex+batchSize;
     std::cout<<"Data read to array"<<std::endl;
     std::cout<<"Entry index: "<<entryIndex<<std::endl;
+    TFile *f = new TFile("histos.root","recreate");
+    auto passHistMerged = passHist.Merge();
+//    passHistMerged->SetDirectory(f);
+    passHistMerged->Write();
+//    f.Write();
+    f->Close();
 }
 
 void Reader::setFiles(std::vector<std::string> files)

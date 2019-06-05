@@ -14,7 +14,7 @@
 #include "METFilterSelection.cuh"
 #include "TauSelection.cuh"
 
-void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltIndex, int nTaus)
+int wrapper(float *array, int entries, int nVariables, int tauIndex, int hltIndex, int nTaus)
 {
     float *d_array, *d_numericalResults, *h_numericalResults;
     bool *d_passedResults, *h_passedResults, *d_selectedTaus, *h_selectedTaus, *d_passedTrigger, *h_passedTrigger, *d_passedMETFilter, *h_passedMETFilter;
@@ -52,13 +52,14 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
     cudaMemset(d_passed, 1, entries*1*sizeof(bool));
 
 //    int blocks = (100000+1024)/1024; //<<<blocks, 1024>>>
-    triggerSelection<<<1, entries>>>(d_array, d_passedTrigger, d_passed, L1MetCut, nVariables, entries, triggerIndex);
-    metFilterSelection<<<1, entries>>>(d_array, d_passedMETFilter, d_passed, nVariables, entries, metFilterIndex);
-    tauSelection<<<1, entries>>>(d_array, d_passedResults, d_passed, d_selectedTaus, d_numericalResults, nVariables, tauIndex, hltIndex, nTaus, entries);
+    triggerSelection<<<4, 1024>>>(d_array, d_passedTrigger, d_passed, L1MetCut, nVariables, entries, triggerIndex);
+    metFilterSelection<<<4, 1024>>>(d_array, d_passedMETFilter, d_passed, nVariables, entries, metFilterIndex);
+    tauSelection<<<4, 1024>>>(d_array, d_passedResults, d_passed, d_selectedTaus, d_numericalResults, nVariables, tauIndex, hltIndex, nTaus, entries);
 
+    cudaDeviceSynchronize();
 
-    std::cout<<std::endl;
-    std::cout<<"Selection done"<<std::endl;
+//    std::cout<<std::endl;
+//    std::cout<<"Selection done"<<std::endl;
 //    cudaMemcpy(h_passedResults, d_passedResults, entries*nSelections*sizeof(bool), cudaMemcpyDeviceToHost);
 //    cudaMemcpy(h_numericalResults, d_numericalResults, entries*nFloatResults*sizeof(float), cudaMemcpyDeviceToHost);
     cudaMemcpy(h_selectedTaus, d_selectedTaus, entries*nTaus*sizeof(bool), cudaMemcpyDeviceToHost);
@@ -141,4 +142,6 @@ void wrapper(float *array, int entries, int nVariables, int tauIndex, int hltInd
     cudaFree(d_passedTrigger);
     cudaFree(d_passedMETFilter);
     cudaFree(d_passed);
+    
+    return sum;
 }

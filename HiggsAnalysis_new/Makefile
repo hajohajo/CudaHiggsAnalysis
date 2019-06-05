@@ -4,7 +4,7 @@ NVCC=nvcc
 
 
 all: main.cpp Reader.cpp TriggerSelection.o METFilterSelection.o TauSelection.o wrapper.o
-	gcc -std=c++11 -I `root-config --incdir` -o main main.cpp Reader.cpp TriggerSelection.o METFilterSelection.o TauSelection.o wrapper.o -lstdc++ `root-config --libs` -L/usr/local/cuda-9.0/lib64 -lcudart
+	gcc -std=c++11 -I `root-config --incdir` -o main main.cpp Reader.cpp TriggerSelection.o METFilterSelection.o TauSelection.o wrapper.o `root-config --libs` -L/usr/local/cuda-9.0/lib64 -lcudart -lstdc++ -lboost_filesystem -lboost_system
 
 TauSelection.o: CudaSelections/TauSelection.cu
 	$(NVCC) -c CudaSelections/TauSelection.cu

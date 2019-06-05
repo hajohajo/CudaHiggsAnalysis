@@ -7,4 +7,4 @@
 //
 #pragma once
 
-void wrapper(float *inputArray, int entries, int nVariables, int tauIndex, int hltIndex, int nTaus);
+int wrapper(float *inputArray, int entries, int nVariables, int tauIndex, int hltIndex, int nTaus);

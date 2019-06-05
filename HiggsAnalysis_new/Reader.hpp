@@ -40,7 +40,8 @@
 
 #include <stdio.h>
 #include <ROOT/TTreeProcessorMT.hxx>
-
+#include <ROOT/TThreadedObject.hxx>
+#include <TH1.h>
 class Reader
 {
 private:
